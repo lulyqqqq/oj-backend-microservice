@@ -1,0 +1,80 @@
+# 公共配置文件
+spring:
+  application:
+    name: oj-backend-judge-service
+  # 默认 dev 环境
+  profiles:
+    active: dev
+  # 支持 swagger3
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # session 配置
+  session:
+    store-type: redis
+    # 30 天过期
+    timeout: 2592000
+  # 数据库配置0
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://139.159.242.146:3306/my_db
+    username: DataBase
+    password: nian0209
+  # Redis 配置
+  # todo 需替换配置，然后取消注释
+  redis:
+    database: 1
+    host: 139.159.242.146
+    port: 6379
+    timeout: 5000
+  servlet:
+    multipart:
+      # 大小限制
+      max-file-size: 10MB
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  rabbitmq:
+    host: 139.159.242.146
+    port: 5672
+    password: guest
+    username: guest
+    virtual-host: /
+    connection-timeout: 0
+    listener:
+      simple:
+        acknowledge-mode: auto
+        retry:
+          enabled: true # 开启消费者失败重试
+          initial-interval: 1000 # 初识的失败等待时长为1秒
+          multiplier: 1 # 失败的等待时长倍数，下次等待时长 = multiplier * last-interval
+          max-attempts: 3 # 最大重试次数
+          stateless: true # true无状态；false有状态。如果业务中包含事务，这里改为false
+server:
+  address: 0.0.0.0
+  port: 8104
+  servlet:
+    context-path: /api/judge
+    # cookie 30 天过期
+    session:
+      cookie:
+        max-age: 2592000
+        path: /api
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+knife4j:
+  enable: true
+
+# 代码沙箱配置 默认值是简单代码沙箱 可调用远程代码沙箱（remote）和第三方代码沙箱（thirdParty）
+codesandbox:
+  type: remote
+
+

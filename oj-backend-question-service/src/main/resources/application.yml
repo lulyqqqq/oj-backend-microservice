@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: oj-backend-question-service
+  # 默认 dev 环境
+  profiles:
+    active: dev
+  # 支持 swagger3
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # session 配置
+  session:
+    store-type: redis
+    # 30 天过期
+    timeout: 2592000
+
+  # 数据库配置0
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://139.159.242.146:3306/my_db
+    username: DataBase
+    password: nian0209
+  # Redis 配置
+  redis:
+    database: 1
+    host: 139.159.242.146
+    port: 6379
+    timeout: 5000
+  servlet:
+    multipart:
+      # 大小限制
+      max-file-size: 10MB
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  rabbitmq:
+    host: 139.159.242.146
+    port: 5672
+    password: guest
+    username: guest
+    # 启动publisher-confirm，这里支持两种类型
+    #correlated：异步回调，定义 ConfirmCallback，MQ 返回结果时会回调这个 ConfirmCallback
+    publisher-confirm-type: correlated
+    # 开启 publish-return 功能，同样是基于 callback 机制，不过是定义 ReturnCallback
+    publisher-returns: true
+    # 定义消息路由失败时的策略。true，则调用 ReturnCallback；false：则直接丢弃消息
+    template:
+      mandatory: true
+server:
+  address: 0.0.0.0
+  port: 8103
+  servlet:
+    context-path: /api/question
+    # cookie 30
+    session:
+      cookie:
+        max-age: 2592000
+        path: /api
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+
+knife4j:
+  enable: true
+
+# 代码沙箱配置 默认值是简单代码沙箱 可调用远程代码沙箱（remote）和第三方代码沙箱（thirdParty）
+codesandbox:
+  type: remote
+
+

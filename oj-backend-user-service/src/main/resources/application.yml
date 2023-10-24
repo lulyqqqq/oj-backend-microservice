@@ -1,0 +1,63 @@
+spring:
+  application:
+    name: oj-backend-user-service
+  # ?? dev ??
+  profiles:
+    active: dev
+  # ?? swagger3
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # session ??
+  session:
+    store-type: redis
+    # 30 ???
+    timeout: 2592000
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  # ?????0
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://139.159.242.146:3306/my_db
+    username: DataBase
+    password: nian0209
+  # Redis ??
+  # todo ????????????
+  redis:
+    database: 1
+    host: 139.159.242.146
+    port: 6379
+    timeout: 5000
+  servlet:
+    multipart:
+      # ????
+      max-file-size: 10MB
+server:
+  address: 0.0.0.0
+  port: 8102
+  servlet:
+    context-path: /api/user
+    # cookie 30 ???
+    session:
+      cookie:
+        max-age: 2592000
+        path: /api
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # ????????????
+      logic-delete-value: 1 # ?????????? 1?
+      logic-not-delete-value: 0 # ?????????? 0?
+
+knife4j:
+  enable: true
+
+codesandbox:
+  type: remote
+
+
